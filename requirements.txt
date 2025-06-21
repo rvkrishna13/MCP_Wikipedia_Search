@@ -1,0 +1,6 @@
+wikipedia==1.4.0
+mcp==1.9.4
+langchain-mcp-adapters==0.1.7
+langchain-openapi==0.1.1
+langgraph==0.4.8
+langchain==0.3.26
