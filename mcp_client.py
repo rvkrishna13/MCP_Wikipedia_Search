@@ -26,7 +26,7 @@ open_api_key = "sk-proj-KKHxUAMUSyTQzRTDnRcshld5Oa-PGqOUDIovmmUQMuKJ2N9vPf99A04j
 async def create_graph(session):
 	tools = await load_mcp_tools(session)
 
-	llm = ChatOpenAI(model='gpt-4', temperature=0, open_api_key=open_api_key)
+	llm = ChatOpenAI(model='gpt-4', temperature=0, openai_api_key=open_api_key)
 	llm_with_tools = llm.bind_tools(tools)
 
 	prompt_template = ChatPromptTemplate.from_messages([
@@ -40,10 +40,10 @@ async def create_graph(session):
 		state["messages"] = chat_llm.invoke({"messages":state["messages"]})
 		return state
 
-	graph = StateGraph(state)
+	graph = StateGraph(State)
 	graph.add_node("chat_node", chat_node)
 	graph.add_node("tool_node", ToolNode(tools=tools))
-	graph.add_edge(START, chat_node)
+	graph.add_edge(START, "chat_node")
 	graph.add_conditional_edges("chat_node", tools_condition, {
     	"tools": "tool_node",
     	"__end__": END
